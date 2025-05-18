@@ -1,4 +1,3 @@
-from anyio import current_time
 import json, requests
 import os
 import time

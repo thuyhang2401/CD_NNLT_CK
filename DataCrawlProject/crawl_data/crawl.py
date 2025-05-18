@@ -1,15 +1,9 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
 import json
-
-# Pseudocode
-# Each thread crawling n pages
-# Each index apart 13 degree
-# Category ID from 99958673-99958714-99958741-99958819
-
-# Create class GlassesCrawlThread(self,url,page_for_thread)
 
 class GlassesCrawlerThread(Thread):
     header = {
@@ -60,7 +54,7 @@ class GlassesCrawlerThread(Thread):
 class DataCrawling:
 
     def __init__(self):
-        with open('data_crawl/config.json') as f:
+        with open('crawl_data/config.json') as f:
             config = json.load(f)
         crawl_cfg = config['crawling']
         self.crawler_delay = crawl_cfg['delay']
@@ -105,25 +99,18 @@ class DataCrawling:
                     thread.start()
 
             [thr.join() for thr in threads]
-            self.data['glasses_list'].extend([result for thr in threads for result in thr.results])
-            self.send_data()
+            self.data = [result for thr in threads for result in thr.results]
             self.save_to_json()
-
     def timer_crawl(self):
         self.scheduler.add_job(self.crawling, 'cron',
                                hour=self.crawler_delay["hour"],
                                minute=self.crawler_delay["minute"])
         self.scheduler.start()
 
-    def send_data(self):
-        requests.post('http://mysql_api_container:8001/insertCrawlData', data=json.dumps(self.data))
-
     def save_to_json(self):
         os.makedirs('data_crawl', exist_ok=True)
-        with open('data_crawl/glasses_data.json', 'w', encoding='utf-8') as f:
+        with open('data_crawl/data.json', 'w', encoding='utf-8') as f:
             json.dump(self.data, f, ensure_ascii=False, indent=4)
 
     def reset_data(self):
-        self.data = {
-            'glasses_list': []
-        }
+        self.data.clear()

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from crawl import DataCrawling
+from .crawl import DataCrawling
 
 app = FastAPI()
 data_crawling = DataCrawling()

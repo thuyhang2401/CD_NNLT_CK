@@ -1,0 +1,9 @@
+{
+	"crawling": {
+		"delay": {
+			"hour": 6,
+			"minute": 0
+		},
+		"number_of_category": 1
+	}
+}

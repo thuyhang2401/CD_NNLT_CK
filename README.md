@@ -9,10 +9,13 @@ Bài tập lớn cuối kỳ môn CD_NNLT (data crawling, search thông tin từ
     MYSQL_PORT = os.getenv("MYSQL_PORT", "3306")
     MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "glasses_db")
 - Tạo database `glasses_db` trong MySQL (dùng file `init.sql`)
-1. Chạy ingestion lưu data từ file json vào MySQL:
-- Chạy lệnh: `uuvicorn mysql_api.sql_api:app --host 0.0.0.0 --port 8000`
-- Chạy lệnh: `python ingestion/ingest.py`
-- Thêm data vào `data_crawl/data.json`
-2. Chạy API search, filter sản phẩm:
-- Chạy lệnh: `uuvicorn mysql_api.sql_api:app --host 0.0.0.0 --port 8000`
+1. Chạy Data crawling để lấy dữ liệu từ web https://www.glasses.com/ vào file json:
+- Chạy lệnh: `uvicorn crawl_data.crawl_api:app --host 0.0.0.0 --port 8001`
+- Vào địa chỉ: `http://127.0.0.1:8001/docs`
+- Chạy API 'GET /crawl' để crawl dữ liệu về
+2. Chạy ingestion lưu data từ file json vào MySQL:
+- Chạy lệnh: `uvicorn mysql_api.sql_api:app --host 0.0.0.0 --port 8000`
+- Chạy lệnh: `python ingestion/ingest.py` để lưu dữ liệu vào MySQL
+3. Chạy API search, filter sản phẩm:
+- Chạy lệnh: `uvicorn mysql_api.sql_api:app --host 0.0.0.0 --port 8000`
 - Vào địa chỉ: `http://127.0.0.1:8000/docs`
