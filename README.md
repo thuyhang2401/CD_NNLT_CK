@@ -19,3 +19,7 @@ Bài tập lớn cuối kỳ môn CD_NNLT (data crawling, search thông tin từ
 3. Chạy API search, filter sản phẩm:
 - Chạy lệnh: `uvicorn mysql_api.sql_api:app --host 0.0.0.0 --port 8000`
 - Vào địa chỉ: `http://127.0.0.1:8000/docs`
+4. Chạy UI search, filter sản phẩm:
+- Chạy lệnh: `uvicorn mysql_api.sql_api:app --host 0.0.0.0 --port 8000`
+- Chạy lệnh: `python -m http.server 8080`
+- Vào địa chỉ: `http://localhost:8080/app_main/front_end/index.html`
