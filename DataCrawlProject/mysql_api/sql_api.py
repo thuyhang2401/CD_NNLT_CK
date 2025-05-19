@@ -1,13 +1,19 @@
 from fastapi import FastAPI, HTTPException
-
-from mysql_api.models import Glasses
 from .data_access import DataAccess
 from .schema import GlassesSchema
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 sql = DataAccess()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/api/v1/glasses", response_model=list[GlassesSchema])
 def get_all():
