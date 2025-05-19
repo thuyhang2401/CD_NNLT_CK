@@ -2,13 +2,14 @@ const search = document.getElementById('search');
 const productList = document.getElementById('product-list');
 const listCard = [];
 const button = document.getElementById("price-button");
+const buttonShow = document.getElementById("show-item");
 const minPrice = document.getElementById("price-min");
 const maxPrice = document.getElementById("price-max");
 
 search.addEventListener('input', (e) => filterInput(e.target.value))
 productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>'; // Hiển thị loading và dòng chữ
 // Lấy dữ liệu từ API
-fetch('http://127.0.0.1:9001/')
+fetch('http://127.0.0.1:8000/api/v1/glasses')
   .then(response => response.json())
   .then(data => {
     productList.innerHTML = ''; // Xóa loading và dòng chữ
@@ -61,7 +62,7 @@ fetch('http://127.0.0.1:9001/')
 function seacrhPrice(minPrice, maxPrice) {
   productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>'; // Hiển thị loading và dòng chữ
   // Lấy dữ liệu từ API
-  fetch('http://127.0.0.1:9001/getByPrice?_min=' + minPrice + '&_max=' + maxPrice)
+  fetch('http://127.0.0.1:8000/api/v1/glasses/filter?min=' + minPrice + '&max=' + maxPrice)
     .then(response => response.json())
     .then(data => {
       productList.innerHTML = ''; // Xóa loading và dòng chữ
@@ -120,9 +121,71 @@ function filterInput(keySearch) {
   })
 };
 
+function fetchAllGlasses() {
+  productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>';
+  fetch('http://127.0.0.1:8000/api/v1/glasses')
+    .then(response => response.json())
+    .then(data => {
+      productList.innerHTML = '';
+      listCard.length = 0; // clear old listCard
+      let rowDiv = document.createElement('div');
+      rowDiv.className = 'row';
+
+      data.forEach((glasses, index) => {
+        if (index % 2 === 0 && index !== 0) {
+          productList.appendChild(rowDiv);
+          rowDiv = document.createElement('div');
+          rowDiv.className = 'row';
+        }
+
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col-lg-6 col-md-6 col-sm-12';
+        listCard.push(colDiv);
+
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card';
+
+        const cardImageDiv = document.createElement('div');
+        cardImageDiv.className = 'card-image';
+        const img = document.createElement('img');
+        img.src = glasses.img_url;
+        cardImageDiv.appendChild(img);
+
+        const cardTitleDiv = document.createElement('div');
+        cardTitleDiv.className = 'card-title';
+        cardTitleDiv.innerHTML = glasses.glasses_name;
+
+        const cardBrandDiv = document.createElement('div');
+        cardBrandDiv.className = 'card-brand';
+        cardBrandDiv.innerHTML = glasses.brand_name;
+
+        const cardPriceDiv = document.createElement('div');
+        cardPriceDiv.className = 'card-price';
+        cardPriceDiv.innerHTML = `$${glasses.price}`;
+
+        cardDiv.appendChild(cardImageDiv);
+        cardDiv.appendChild(cardTitleDiv);
+        cardDiv.appendChild(cardBrandDiv);
+        cardDiv.appendChild(cardPriceDiv);
+
+        colDiv.appendChild(cardDiv);
+        rowDiv.appendChild(colDiv);
+
+        if (index === data.length - 1) {
+          productList.appendChild(rowDiv);
+        }
+      });
+    })
+    .catch(error => console.log(error));
+}
+
 
 button.addEventListener("click", function () {
   const minValue = parseInt(minPrice.value);
   const maxValue = parseInt(maxPrice.value);
   seacrhPrice(minValue, maxValue);
+});
+
+buttonShow.addEventListener("click", function () {
+  fetchAllGlasses();
 });
