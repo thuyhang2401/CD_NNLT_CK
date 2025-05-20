@@ -9,7 +9,7 @@ const maxPrice = document.getElementById("price-max");
 search.addEventListener('input', (e) => filterInput(e.target.value))
 productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>'; // Hiển thị loading và dòng chữ
 // Lấy dữ liệu từ API
-fetch('http://127.0.0.1:8000/api/v1/glasses')
+fetch('http://127.0.0.1:9000/api/v1/glasses')
   .then(response => response.json())
   .then(data => {
     productList.innerHTML = ''; // Xóa loading và dòng chữ
@@ -62,7 +62,7 @@ fetch('http://127.0.0.1:8000/api/v1/glasses')
 function seacrhPrice(minPrice, maxPrice) {
   productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>'; // Hiển thị loading và dòng chữ
   // Lấy dữ liệu từ API
-  fetch('http://127.0.0.1:8000/api/v1/glasses/filter?min=' + minPrice + '&max=' + maxPrice)
+  fetch('http://127.0.0.1:9000/api/v1/glasses/filter?min=' + minPrice + '&max=' + maxPrice)
     .then(response => response.json())
     .then(data => {
       productList.innerHTML = ''; // Xóa loading và dòng chữ
@@ -123,7 +123,7 @@ function filterInput(keySearch) {
 
 function fetchAllGlasses() {
   productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>';
-  fetch('http://127.0.0.1:8000/api/v1/glasses')
+  fetch('http://127.0.0.1:9000/api/v1/glasses')
     .then(response => response.json())
     .then(data => {
       productList.innerHTML = '';

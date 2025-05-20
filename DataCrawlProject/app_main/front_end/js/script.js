@@ -1,7 +1,7 @@
 
 const productList = document.getElementById('product-list');
 productList.innerHTML = '<div class="loader"></div><p class="load">Loading...</p>'; // Hiển thị loading và dòng chữ
-fetch('http://127.0.0.1:8000/api/v1/glasses')
+fetch('http://127.0.0.1:9000/api/v1/glasses')
     .then(response => response.json())
     .then(data => {
         productList.innerHTML = ''; // Xóa loading và dòng chữ
