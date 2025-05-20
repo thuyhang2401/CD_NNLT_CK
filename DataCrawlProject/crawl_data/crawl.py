@@ -108,8 +108,9 @@ class DataCrawling:
         self.scheduler.start()
 
     def save_to_json(self):
-        os.makedirs('data_crawl', exist_ok=True)
-        with open('data_crawl/data.json', 'w', encoding='utf-8') as f:
+        data_path = os.getenv("DATA_FILE_PATH", "data_crawl/data.json")
+        os.makedirs(os.path.dirname(data_path), exist_ok=True)
+        with open(data_path, 'w', encoding='utf-8') as f:
             json.dump(self.data, f, ensure_ascii=False, indent=4)
 
     def reset_data(self):

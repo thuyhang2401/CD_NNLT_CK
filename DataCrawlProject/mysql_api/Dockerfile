@@ -5,7 +5,8 @@ WORKDIR /app
 COPY ./mysql_api /app/mysql_api
 COPY ./ingestion /app/ingestion
 
-RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy pymysql
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 ENV MYSQL_USER=root
 ENV MYSQL_PASSWORD=""

@@ -1,4 +1,3 @@
-CREATE DATABASE glasses_db;
 USE glasses_db;
 CREATE TABLE glasses (
     glasses_id varchar(20) NOT NULL ,
