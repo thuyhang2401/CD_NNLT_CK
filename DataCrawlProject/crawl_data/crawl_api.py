@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from .crawl import DataCrawling
 
-app = FastAPI()
+app = FastAPI(root_path="/crawl")
 data_crawling = DataCrawling()
 
 
@@ -11,7 +11,7 @@ def startup():
     data_crawling.timer_crawl()
 
 
-@app.get("/crawl")
+@app.get("/")
 def crawl():
     data_crawling.crawling()
     data = data_crawling.data

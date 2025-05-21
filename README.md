@@ -21,9 +21,9 @@ Bài tập lớn cuối kỳ môn CD_NNLT (data crawling, search thông tin từ
 - Vào địa chỉ: http://127.0.0.1:8000/docs
 ## Run docker:
 - Chạy lệnh: `docker compose up --build`
-- API data crawling: http://127.0.0.1:9001/docs
-- API db: http://127.0.0.1:9000/docs
-- UI: http://localhost:9080/filter.html
+- API data crawling: http://localhost:90/crawl/docs
+- API db: http://localhost:90/api/docs
+- UI: http://localhost:90/web/index.html
 ## 📁 Project Structure
 
 ```
@@ -57,6 +57,9 @@ DataCrawlProject/
 │   │   └── init.sql
 │   ├── mysql_data/
 │   │   └── ...
+│   └── Dockerfile
+├── nginx/
+│   ├── nginx.conf
 │   └── Dockerfile
 ├── docker-compose.yml
 └── requirements.txt

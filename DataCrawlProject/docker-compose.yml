@@ -70,6 +70,19 @@ services:
     networks:
       - crawling
 
+  nginx_gateway:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "90:80"
+    depends_on:
+      - api
+      - crawl
+      - ui
+    networks:
+      - crawling
+
 volumes:
   mysql_data:
 

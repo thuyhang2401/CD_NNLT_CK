@@ -4,7 +4,7 @@ from .schema import GlassesSchema
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 sql = DataAccess()
 
 app.add_middleware(
@@ -15,12 +15,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/v1/glasses", response_model=list[GlassesSchema])
+@app.get("/v1/glasses", response_model=list[GlassesSchema])
 def get_all():
     return sql.get_all_glasses()
 
 
-@app.get("/api/v1/glasses/search", response_model=list[GlassesSchema])
+@app.get("/v1/glasses/search", response_model=list[GlassesSchema])
 def search_glasses(keyword: str):
     result = sql.search_glasses(keyword)
     if not result:
@@ -28,7 +28,7 @@ def search_glasses(keyword: str):
     return result
 
 
-@app.get("/api/v1/glasses/filter", response_model=list[GlassesSchema])
+@app.get("/v1/glasses/filter", response_model=list[GlassesSchema])
 def search_glasses(min: float, max: float):
     result = sql.filter_by_price(min, max)
     if not result:
